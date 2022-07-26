@@ -5,19 +5,19 @@ import '../Providers/productmodel.dart';
 import '../screen/productdetailscreen.dart';
 import '../Providers/productmodel.dart';
 import 'package:provider/provider.dart';
+import '../Providers/cart.dart';
 
 class Productwidget extends StatelessWidget {
   //const Productwidget({Key? key}) : super(key: key);
- 
 
   @override
   Widget build(BuildContext context) {
-    final product = Provider.of<Product>(context,listen: false);
-
+    final product = Provider.of<Product>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
     return GridTile(
         footer: GridTileBar(
           leading: Consumer(
-            builder: (ctx,Product product,child)=>IconButton(
+            builder: (ctx, Product product, child) => IconButton(
                 color: Colors.red,
                 onPressed: () {
                   product.toggle();
@@ -25,7 +25,8 @@ class Productwidget extends StatelessWidget {
                 },
                 icon: Icon(product.isfav
                     ? Icons.favorite
-                    : Icons.favorite_border_outlined)),),
+                    : Icons.favorite_border_outlined)),
+          ),
           title: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Text(
@@ -34,12 +35,17 @@ class Productwidget extends StatelessWidget {
                 overflow: TextOverflow.fade,
               )),
           backgroundColor: Colors.black54,
-          trailing:
-              IconButton(onPressed: () {}, icon: Icon(Icons.shopping_bag)),
+          trailing: IconButton(
+              onPressed: () {
+                cart.addItem(
+                    product.id, product.price, product.title);
+              },
+              icon: Icon(Icons.shopping_bag)),
         ),
         child: InkWell(
             onTap: () {
-              Navigator.of(context).pushNamed('/productdetail', arguments: product.id);
+              Navigator.of(context)
+                  .pushNamed('/productdetail', arguments: product.id);
             },
             child: Image.network(
               product.imageUrl,

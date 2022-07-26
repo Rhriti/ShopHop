@@ -4,6 +4,10 @@ import 'productmodel.dart';
 
 class Products with ChangeNotifier {
   bool showfav = false;
+  void favchange(int x) {
+    if (x == 1) showfav = true;
+    if (x == 2) showfav = false;
+  }
 
   List<Product> _items = [
     Product(
@@ -39,22 +43,12 @@ class Products with ChangeNotifier {
           'https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Cast-Iron-Pan.jpg/1024px-Cast-Iron-Pan.jpg',
     ),
   ];
-  List get items{
+  List get items {
     if (showfav)
       return [..._items.where((element) => element.isfav == true)];
     else
       return [..._items];
     //so to not return reference to list
-  }
-
-  void fav() {
-    showfav = true;
-    notifyListeners();
-  }
-
-  void notfav() {
-    showfav = false;
-    notifyListeners();
   }
 
   Product product(String id) {

@@ -4,6 +4,8 @@ import './screen/productscreen.dart';
 import 'package:provider/provider.dart';
 import './Providers/productprovider.dart';
 import './screen/productdetailscreen.dart';
+import './Providers/cart.dart';
+
 
 void main() => runApp(Myapp());
 
@@ -16,12 +18,12 @@ class _MyappState extends State<Myapp> {
   //const Myapp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (ctx) => Products(),  // it will trigger when item is added or else 
+
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (ctx) => Products()),ChangeNotifierProvider(create: (_)=>Cart())],
       child: MaterialApp(
-        routes: {
-          Productdetailscreen.route:(_)=>Productdetailscreen()
-        },
+        debugShowCheckedModeBanner: false,
+        routes: {Productdetailscreen.route: (_) => Productdetailscreen()},
         home: Productscreen(),
       ),
     );
