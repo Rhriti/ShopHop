@@ -50,6 +50,7 @@ class Productwidget extends StatelessWidget {
             child: Image.network(
               product.imageUrl,
               fit: BoxFit.cover,
+              
             )));
   }
 }

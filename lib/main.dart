@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import './Providers/productprovider.dart';
 import './screen/productdetailscreen.dart';
 import './Providers/cart.dart';
+import './screen/cartscreen.dart';
 
 
 void main() => runApp(Myapp());
@@ -23,7 +24,7 @@ class _MyappState extends State<Myapp> {
       providers: [ChangeNotifierProvider(create: (ctx) => Products()),ChangeNotifierProvider(create: (_)=>Cart())],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        routes: {Productdetailscreen.route: (_) => Productdetailscreen()},
+        routes: {Productdetailscreen.route: (_) => Productdetailscreen(),'/cart':(_)=>Cartscreen()},
         home: Productscreen(),
       ),
     );

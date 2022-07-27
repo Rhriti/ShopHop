@@ -50,7 +50,9 @@ class _ProductscreenState extends State<Productscreen> {
             icon: Icon(
               Icons.shopping_cart,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed('/cart');
+            },
           ),
         ),
       ]),
