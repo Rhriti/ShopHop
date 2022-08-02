@@ -27,7 +27,8 @@ class Cartscreen extends StatelessWidget {
                 elevation: 15,
                 borderOnForeground: true,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:13,vertical: 5),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 13, vertical: 5),
                   child: Row(children: [
                     Text('TOTAL',
                         style: TextStyle(
@@ -42,7 +43,7 @@ class Cartscreen extends StatelessWidget {
                           avatar: CircleAvatar(
                               child: Icon(Icons.currency_rupee_outlined)),
                         ),
-                        TextButton(onPressed: (){}, child: Text('ORDER NOW'))
+                        TextButton(onPressed: () {}, child: Text('ORDER NOW'))
                       ],
                     ),
                   ]),
@@ -51,8 +52,18 @@ class Cartscreen extends StatelessWidget {
               // ignore: unused_local_variable
               ...List.generate(cart.items.length, (index) {
                 return ListTile(
-                  title: Text(citems[index].title),
-                );
+                    trailing: Text('X ${citems[index].quantity}'),
+                    title: Text(citems[index].title),
+                    subtitle: Text(
+                        'total : ₹ ${citems[index].price * citems[index].quantity}'),
+                    leading: Chip(
+                      elevation: 5,
+                      backgroundColor: Colors.white12,
+                      label: Text(citems[index].price.toString()),
+                      avatar: CircleAvatar(
+                        child: Icon(Icons.currency_rupee),
+                      ),
+                    ));
               })
             ],
           ),
