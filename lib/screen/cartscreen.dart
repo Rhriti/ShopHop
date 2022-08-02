@@ -8,10 +8,11 @@ class Cartscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<Cart>(context);
-    double total=0.0;
+    double total = 0.0;
     cart.items.forEach((pid, cartitem) {
       total += cartitem.price * cartitem.quantity;
     });
+    List<CartItem> citems = cart.items.values.toList();
 
     return Scaffold(
         appBar: AppBar(
@@ -22,14 +23,37 @@ class Cartscreen extends StatelessWidget {
           child: Column(
             children: [
               Card(
-                color: Color.fromARGB(255, 24, 241, 197),
+                //color: Colors.amber,
+                elevation: 15,
+                borderOnForeground: true,
                 child: Padding(
-                  
-                  padding: const EdgeInsets.all(20),
-                  child: Row(children: [ 
-                   Text('TOTAL'),Spacer(),Chip(label:Text(total.toString()),avatar: CircleAvatar(child: Icon(Icons.currency_rupee_outlined)),)]),
+                  padding: const EdgeInsets.symmetric(horizontal:13,vertical: 5),
+                  child: Row(children: [
+                    Text('TOTAL',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400, fontSize: 25)),
+                    Spacer(),
+                    Column(
+                      children: [
+                        Chip(
+                          backgroundColor: Colors.white38,
+                          elevation: 5,
+                          label: Text(total.toString()),
+                          avatar: CircleAvatar(
+                              child: Icon(Icons.currency_rupee_outlined)),
+                        ),
+                        TextButton(onPressed: (){}, child: Text('ORDER NOW'))
+                      ],
+                    ),
+                  ]),
                 ),
               ),
+              // ignore: unused_local_variable
+              ...List.generate(cart.items.length, (index) {
+                return ListTile(
+                  title: Text(citems[index].title),
+                );
+              })
             ],
           ),
         ));
