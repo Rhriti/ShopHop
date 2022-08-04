@@ -36,9 +36,9 @@ class Productwidget extends StatelessWidget {
               )),
           backgroundColor: Colors.black54,
           trailing: IconButton(
+            
               onPressed: () {
-                cart.addItem(
-                    product.id, product.price, product.title);
+                cart.addItem(product.id, product.price, product.title);
               },
               icon: Icon(Icons.shopping_bag)),
         ),
@@ -50,7 +50,6 @@ class Productwidget extends StatelessWidget {
             child: Image.network(
               product.imageUrl,
               fit: BoxFit.cover,
-              
             )));
   }
 }

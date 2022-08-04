@@ -6,7 +6,7 @@ import './Providers/productprovider.dart';
 import './screen/productdetailscreen.dart';
 import './Providers/cart.dart';
 import './screen/cartscreen.dart';
-
+import './screen/orderscreen.dart';
 
 void main() => runApp(Myapp());
 
@@ -19,12 +19,19 @@ class _MyappState extends State<Myapp> {
   //const Myapp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-
     return MultiProvider(
-      providers: [ChangeNotifierProvider(create: (ctx) => Products()),ChangeNotifierProvider(create: (_)=>Cart())],
+      providers: [
+        ChangeNotifierProvider(create: (ctx) => Products()),
+        ChangeNotifierProvider(create: (_) => Cart())
+
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        routes: {Productdetailscreen.route: (_) => Productdetailscreen(),'/cart':(_)=>Cartscreen()},
+        routes: {
+          Productdetailscreen.route: (_) => Productdetailscreen(),
+          '/cart': (_) => Cartscreen(),
+          '/orders':(_)=>Orders()
+        },
         home: Productscreen(),
       ),
     );

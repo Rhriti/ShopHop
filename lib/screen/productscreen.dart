@@ -5,6 +5,7 @@ import '../widget/productwidget.dart';
 import 'package:provider/provider.dart';
 import '../widget/badge.dart';
 import '../Providers/cart.dart';
+import 'drawer.dart';
 //import 'productdetailscreen.dart';
 
 class Productscreen extends StatefulWidget {
@@ -20,6 +21,7 @@ class _ProductscreenState extends State<Productscreen> {
         context); //by <> you mention which type of provider you are listening to
     final products = prodata.items;
     return Scaffold(
+      drawer: Drawerscreen(),
       appBar: AppBar(title: Text('Shop'), actions: [
         PopupMenuButton(
           icon: Icon(Icons.more_vert),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class CartItem {
   final String id;
@@ -25,6 +26,13 @@ class Cart with ChangeNotifier {
     return _items.length;
   }
 
+  void dismiss(pid) {
+    print(pid);
+    for (CartItem val in items.values) print(val.id);
+    _items.removeWhere((key, value) => value.id == pid);
+    notifyListeners();
+  }
+
   void addItem(
     String productId,
     double price,
@@ -34,7 +42,7 @@ class Cart with ChangeNotifier {
       // change quantity...
 
       _items.update(
-        productId,   //this is the key MP
+        productId, //this is the key MP
         (existingCartItem) => CartItem(
           id: existingCartItem.id,
           title: existingCartItem.title,
