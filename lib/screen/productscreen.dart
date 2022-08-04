@@ -54,6 +54,7 @@ class _ProductscreenState extends State<Productscreen> {
             ),
             onPressed: () {
               Navigator.of(context).pushNamed('/cart');
+              
             },
           ),
         ),

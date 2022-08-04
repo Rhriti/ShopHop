@@ -3,12 +3,14 @@ import 'package:flutter/foundation.dart';
 
 class CartItem {
   final String id;
+  //final String pid;
   final String title;
-  final int quantity;
+  int quantity;
   final double price;
 
   CartItem({
     required this.id,
+    //required this.pid,
     required this.title,
     required this.quantity,
     required this.price,
@@ -24,6 +26,19 @@ class Cart with ChangeNotifier {
 
   int get itemCount {
     return _items.length;
+  }
+
+  void undo(pid) {
+    var mark;
+    for (String key in _items.keys) {
+      if (key == pid) {
+        _items[key]!.quantity -= 1;
+        mark = key;
+        break;
+      }
+    }
+    if (_items[mark]!.quantity == 0) _items.remove(mark);
+    notifyListeners();
   }
 
   void dismiss(pid) {
