@@ -57,37 +57,57 @@ class Cartscreen extends StatelessWidget {
               ),
               // ignore: unused_local_variable
               ...List.generate(cart.items.length, (index) {
-
-                  return Dismissible(
-                    onDismissed: (dir) {
-                      cart.dismiss(citems[index].id);
-                      print(citems[index].id);
-                    },
-                    direction: DismissDirection.endToStart,
-                    background: Container(
-                      padding: EdgeInsets.all(10),
-                      alignment: Alignment.centerRight,
-                      child: Icon(Icons.delete),
-                      width: double.infinity,
-                      decoration: BoxDecoration(color: Colors.red),
-                    ),
-                    key: ValueKey(citems[index].id),
-                    child: ListTile(
-                        trailing: Text('X ${citems[index].quantity}'),
-                        title: Text(citems[index].title),
-                        subtitle: Text(
-                            'total : ₹ ${citems[index].price * citems[index].quantity}'),
-                        leading: Chip(
-                          elevation: 5,
-                          backgroundColor: Colors.white12,
-                          label: Text(citems[index].price.toString()),
-                          avatar: CircleAvatar(
-                            child: Icon(Icons.currency_rupee),
-                          ),
-                        )),
-                  );
-                } 
-              )
+                return Dismissible(
+                  confirmDismiss: (dir) {
+                    return showDialog(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            actionsAlignment: MainAxisAlignment.center,
+                            content: Text('Delete item ?',textAlign: TextAlign.center,),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(false);
+                                  },
+                                  child: Text('NO')),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(true);
+                                  },
+                                  child: Text('YES'))
+                            ],
+                          );
+                        });
+                  },
+                  onDismissed: (dir) {
+                    cart.dismiss(citems[index].id);
+                    print(citems[index].id);
+                  },
+                  direction: DismissDirection.endToStart,
+                  background: Container(
+                    padding: EdgeInsets.all(10),
+                    alignment: Alignment.centerRight,
+                    child: Icon(Icons.delete),
+                    width: double.infinity,
+                    decoration: BoxDecoration(color: Colors.red),
+                  ),
+                  key: ValueKey(citems[index].id),
+                  child: ListTile(
+                      trailing: Text('X ${citems[index].quantity}'),
+                      title: Text(citems[index].title),
+                      subtitle: Text(
+                          'total : ₹ ${citems[index].price * citems[index].quantity}'),
+                      leading: Chip(
+                        elevation: 5,
+                        backgroundColor: Colors.white12,
+                        label: Text(citems[index].price.toString()),
+                        avatar: CircleAvatar(
+                          child: Icon(Icons.currency_rupee),
+                        ),
+                      )),
+                );
+              })
             ],
           ),
         ));

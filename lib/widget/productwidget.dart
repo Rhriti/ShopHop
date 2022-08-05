@@ -37,6 +37,7 @@ class Productwidget extends StatelessWidget {
           backgroundColor: Colors.black54,
           trailing: IconButton(
               onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     action: SnackBarAction(
                         disabledTextColor: Colors.white,

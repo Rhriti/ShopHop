@@ -51,6 +51,10 @@ class Products with ChangeNotifier {
     //so to not return reference to list
   }
 
+  List get allitems {
+    return [..._items];
+  }
+
   Product product(String id) {
     return items.firstWhere((element) => element.id == id);
   }
