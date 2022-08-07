@@ -18,7 +18,7 @@ class Userproduct extends StatelessWidget {
             },
             icon: Icon(Icons.add))
       ], title: Text('Products')),
-      body: Column(
+      body: ListView(
           children: prodata.allitems.map((ele) => Userprowidget(ele)).toList()),
     );
   }

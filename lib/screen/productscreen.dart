@@ -17,8 +17,7 @@ class _ProductscreenState extends State<Productscreen> {
   //const Productscreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final prodata = Provider.of<Products>(
-        context); //by <> you mention which type of provider you are listening to
+    final prodata = Provider.of<Products>(context); //by <> you mention which type of provider you are listening to
     final products = prodata.items;
     return Scaffold(
       drawer: Drawerscreen(),

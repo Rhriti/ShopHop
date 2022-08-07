@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shopapp/Providers/productmodel.dart';
+import '../Providers/productprovider.dart';
+import 'package:provider/provider.dart';
 
 class Productedit extends StatefulWidget {
   //Productedit({Key? key}) : super(key: key);
@@ -10,10 +12,17 @@ class Productedit extends StatefulWidget {
 class _ProducteditState extends State<Productedit> {
   final _priceFocusNode = FocusNode();
   final _desfocusNode = FocusNode();
-  final url = TextEditingController(text: '');
   final _urlfocusnode = FocusNode();
-  late OverlayEntry _popimage;
+  var _popimage;
+  var url;
   final _form = GlobalKey<FormState>();
+  Product _newproduct = Product(
+      id: DateTime.now().toString(),
+      title: '',
+      description: '',
+      price: 0,
+      imageUrl: '');
+  var currpro = null;
 
   @override
   void initState() {
@@ -41,7 +50,20 @@ class _ProducteditState extends State<Productedit> {
   }
 
   void save() {
+    bool x = _form.currentState!.validate();
+    if (x == false) return;
+    //save only when inputs are valid
     _form.currentState!.save();
+    final products = Provider.of<Products>(context, listen: false);
+    if (currpro == null) {
+      print(_newproduct.id);
+      products.addproduct(_newproduct.id, _newproduct);
+    } else {
+      print(currpro.id);
+      print(_newproduct.id);
+      products.addproduct(currpro.id, _newproduct);
+    }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -57,6 +79,9 @@ class _ProducteditState extends State<Productedit> {
 
   @override
   Widget build(BuildContext context) {
+    currpro = ModalRoute.of(context)!.settings.arguments;
+    url =
+        TextEditingController(text: (currpro == null) ? '' : currpro.imageUrl);
     return Scaffold(
         appBar: AppBar(
           title: Text('Product Manager'),
@@ -68,7 +93,16 @@ class _ProducteditState extends State<Productedit> {
               child: SingleChildScrollView(
                 child: Column(children: [
                   TextFormField(
-                    initialValue: '',
+                    initialValue: (currpro == null) ? '' : currpro.title,
+                    validator: (val) {
+                      if (val == '')
+                        return 'Enter title';
+                      else
+                        return null;
+                    },
+                    onSaved: (val) {
+                      _newproduct.title = val as String;
+                    },
                     autofocus: true,
                     textInputAction: TextInputAction.next,
                     decoration: InputDecoration(label: Text('title')),
@@ -77,7 +111,18 @@ class _ProducteditState extends State<Productedit> {
                     },
                   ),
                   TextFormField(
-                    initialValue: 0.toString(),
+                    initialValue: (currpro == null)
+                        ? 0.toString()
+                        : currpro.price.toString(),
+                    onSaved: (val) {
+                      _newproduct.price = double.parse(val as String);
+                    },
+                    validator: (val) {
+                      if (val == 0.toString())
+                        return 'Enter price';
+                      else
+                        return null;
+                    },
                     autofocus: true,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.number,
@@ -88,7 +133,17 @@ class _ProducteditState extends State<Productedit> {
                     },
                   ),
                   TextFormField(
-                    initialValue: '',
+                    initialValue: (currpro == null) ? '' : currpro.description,
+                    onSaved: (val) {
+                      _newproduct.description = val as String;
+                    },
+                    validator: (val) {
+                      if (val == '')
+                        return 'Enter desc';
+                      else
+                        return null;
+                    },
+
                     autofocus: true,
                     decoration: InputDecoration(label: Text('description')),
                     onFieldSubmitted: (_) {
@@ -97,7 +152,7 @@ class _ProducteditState extends State<Productedit> {
                     maxLines: 3,
                     keyboardType: TextInputType.multiline,
                     focusNode: _desfocusNode,
-                    textInputAction: TextInputAction.next,
+                    //textInputAction: TextInputAction.next,
                   ),
                   Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
                     GestureDetector(
@@ -120,11 +175,21 @@ class _ProducteditState extends State<Productedit> {
                     ),
                     Expanded(
                       child: TextFormField(
+                          // initialValue:
+                          //     (currpro == null) ? '' : currpro.imageUrl,
+                          onSaved: (val) {
+                            _newproduct.imageUrl = val as String;
+                          },
+                          validator: (val) {
+                            if (val == '') return 'Enter url dear';
+                            return null;
+                          },
                           //initialValue: '',
                           textInputAction: TextInputAction.done,
                           focusNode: _urlfocusnode,
                           decoration: InputDecoration(label: Text('Url')),
-                          controller: url,
+                          controller:
+                              url, //either the controller or initial value
                           keyboardType: TextInputType.url,
                           onEditingComplete: () {
                             setState(() {
