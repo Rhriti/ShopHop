@@ -6,7 +6,8 @@ import '../screen/productedit.dart';
 class Userprowidget extends StatelessWidget {
   //const Userprowidget({Key? key}) : super(key: key);
   Product productx;
-  Userprowidget(this.productx);
+  Products prodata;
+  Userprowidget(this.productx, this.prodata);
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +27,22 @@ class Userprowidget extends StatelessWidget {
             child: Row(
               children: [
                 IconButton(
+                    splashColor: Colors.blueAccent,
+                    splashRadius: 25,
+                    color: Colors.blue,
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/productedit',arguments: productx);
+                      Navigator.of(context)
+                          .pushNamed('/productedit', arguments: productx);
                     },
                     icon: Icon(Icons.edit)),
-                IconButton(onPressed: () {}, icon: Icon(Icons.delete))
+                IconButton(
+                    splashColor: Colors.red,
+                    splashRadius: 25,
+                    color: Colors.red,
+                    onPressed: () {
+                      prodata.delelte(productx.id);
+                    },
+                    icon: Icon(Icons.delete))
               ],
             ),
           ),

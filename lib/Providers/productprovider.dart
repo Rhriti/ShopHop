@@ -51,6 +51,11 @@ class Products with ChangeNotifier {
     //so to not return reference to list
   }
 
+  void delelte(String pid) {
+    _items.removeWhere((element) => element.id == pid);
+    notifyListeners();
+  }
+
   List get allitems {
     return [..._items];
   }
@@ -59,7 +64,7 @@ class Products with ChangeNotifier {
     return items.firstWhere((element) => element.id == id);
   }
 
-  void addproduct(String pid,Product pro) {
+  void addproduct(String pid, Product pro) {
     for (Product ele in _items) {
       if (pid == ele.id) {
         ele.title = pro.title;
